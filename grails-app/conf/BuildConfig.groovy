@@ -10,15 +10,12 @@ grails.tomcat.nio = true
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
-    inherits("global") {
-        // specify dependency exclusions here; for example, uncomment this to disable ehcache:
-        // excludes 'ehcache'
-    }
-    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    inherits "global"
+    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
 
     repositories {
-        inherits true // Whether to inherit repository definitions from plugins
+        inherits false // Whether to inherit repository definitions from plugins
 
         grailsPlugins()
         grailsHome()
@@ -26,6 +23,7 @@ grails.project.dependency.resolution = {
 
         mavenLocal()
         mavenCentral()
+        mavenRepo "http://maven.springframework.org/milestone/"
 
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "https://oss.sonatype.org/content/repositories/snapshots"
@@ -44,13 +42,15 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+        build ":webxml:1.4.1"
+
+        compile ":resources:1.2-RC1", ":cloud-foundry:1.2.3-SNAPSHOT", ":oauth:2.0.1"
+
         runtime ":jquery:1.7.1"
-        compile ":resources:1.2-RC1"
         runtime(":coffeescript-resources:0.3.2"){
             exclude 'resources'
         }
 
-        runtime ":cloud-foundry:1.2.2"
         runtime ":hibernate:$grailsVersion"
         runtime ":rabbitmq:1.0.0.RC1"
 
@@ -61,8 +61,6 @@ grails.project.dependency.resolution = {
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
         //runtime ":yui-minify-resources:0.1.4"
-
-
 
         build ":tomcat:$grailsVersion"
 

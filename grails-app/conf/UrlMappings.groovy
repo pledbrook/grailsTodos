@@ -11,7 +11,7 @@ class UrlMappings {
             action = [GET: "list", POST: "save", DELETE: "delete", PUT: "edit"]
         }
 
-        "/"(view: "/index")
+        "/"(controller: "todos", action: "list")
         "500"(view: '/error')
     }
 }

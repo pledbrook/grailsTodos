@@ -68,9 +68,30 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://grailstodos.cloudfoundry.com"
+        grails.serverURL = "http://${appName}.cloudfoundry.com"
     }
 }
+
+oauth {
+    providers {
+        uaa {
+            api = org.example.cloudfoundry.CfUaaApi
+            key = "grails-getstarted"
+            secret = "hc3N3b3JkIiwicmVhZCIsIndyaXRl"
+            callback = "http://localhost:8080/grails-todos-pal/oauth/callback?provider=uaa"
+            successUri = "/"
+            failureUri = "/"
+            scope = "read,write"
+        }
+    }
+}
+
+app {
+    cf {
+        domain = "cf01.qa.las01.vcsops.com"
+    }
+}
+
 
 // log4j configuration
 log4j = {
@@ -78,6 +99,7 @@ log4j = {
         console name: 'stdout'
     }
 
+    off  'org.grails.plugin.resource'
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
             'org.codehaus.groovy.grails.web.pages', //  GSP
             'org.codehaus.groovy.grails.web.sitemesh', //  layouts
