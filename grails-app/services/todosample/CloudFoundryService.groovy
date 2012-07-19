@@ -16,7 +16,7 @@ class CloudFoundryService implements InitializingBean {
     def grailsApplication
 
     void afterPropertiesSet() {
-        appName = Metadata.current.applicationName
+        appName = Metadata.current.getApplicationName()
         cloudFoundryDomain = grailsApplication.config.app.cf.domain
     }
 
@@ -49,13 +49,13 @@ class CloudFoundryService implements InitializingBean {
     }
 
     protected final String generateAppUrl() {
-        return appName + "-" + UUID.randomUUID().toString().encodeAsSHA1()[0..7] + cloudFoundryDomain
+        return appName + "-" + UUID.randomUUID().toString().encodeAsSHA1()[0..7] + '.' + cloudFoundryDomain
     }
 
     protected final CloudService getMysqlConfig() {
         return new CloudService(
-                name: "mysql-${appName}",
-                type: "mysql",
+                name: "mysql-${appName}".toString(),
+                type: "database",
                 vendor: "mysql",
                 version: "5.1",
                 tier: "free")
@@ -63,8 +63,8 @@ class CloudFoundryService implements InitializingBean {
 
     protected final CloudService getRabbitConfig() {
         return new CloudService(
-                name: "rabbitmq-${appName}",
-                type: "rabbitmq",
+                name: "rabbitmq-${appName}".toString(),
+                type: "generic",
                 vendor: "rabbitmq",
                 version: "2.4",
                 tier: "free")
@@ -80,6 +80,7 @@ class CloudFoundryService implements InitializingBean {
             }
         }
 
-        client.createApplication(appName, "grails", 512, [generateAppUrl()], [], true)
+        client.createApplication(appName, "grails", 512, [generateAppUrl()], [])
+        return client.getApplication(appName)
     }
 }

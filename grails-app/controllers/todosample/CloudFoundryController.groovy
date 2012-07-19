@@ -24,12 +24,15 @@ class CloudFoundryController {
         }
 
         Thread.start {
-            def warPath = packageWar()
-            if (warPath) {
-                eventAsync "deployStart"
-                def url = cloudFoundryService.uploadWar(accessToken.token, path)
-                eventAsync "deployEnd", url
+            try {
+                def warPath = packageWar()
+                if (warPath) {
+                    eventAsync "deployStart"
+                    def url = cloudFoundryService.uploadWar(accessToken.token, warPath)
+                    eventAsync "deployEnd", url
+                }
             }
+            catch (Exception ex) { println ex }
         }
 
         render "Deploying app"

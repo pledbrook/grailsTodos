@@ -35,7 +35,7 @@ $(function() {
   });
 
   grailsEvents.on("deployEnd", function(data) {
-    $("#deployBox h2").html("Application now running <a href=\"" + data + "\">on Cloud Foundry</a>");
+    $("#deployBox h2").html("Application now running <a href=\"http://" + data + "/\">on Cloud Foundry</a>");
     $("#deployBox pre").text('');
   });
 });

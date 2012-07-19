@@ -11,7 +11,7 @@
     <g:each in="${apps}" var="app">
     <tr>
       <td>${app.name.encodeAsHTML()}</td>
-      <td>${app.status}</td>
+      <td>${app.state}</td>
     </tr>
     </g:each>
 </body>
