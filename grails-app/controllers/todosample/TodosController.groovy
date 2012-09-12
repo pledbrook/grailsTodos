@@ -6,6 +6,7 @@ class TodosController {
 
     def list() {
         def todos = Todo.findAll() as JSON
+
         if (request.getHeader('X-Requested-With') == 'XMLHttpRequest')
             render(todos)
         else {
@@ -39,4 +40,6 @@ class TodosController {
         }
 
     }
+
+
 }

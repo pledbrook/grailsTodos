@@ -4,6 +4,9 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
+//grails.plugin.location.'platformCore' = '../platform-core'
+//grails.plugin.location.'eventsSi' = '../plugin-platform-project/grails-plugin-platform-incubator/events-si'
+//grails.plugin.location.'eventsPush' = '../plugin-platform-project/events-push'
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.tomcat.nio = true
@@ -17,11 +20,11 @@ grails.project.dependency.resolution = {
     repositories {
         inherits false // Whether to inherit repository definitions from plugins
 
-        grailsPlugins()
-        grailsHome()
         grailsCentral()
-
+        grailsPlugins()
         mavenLocal()
+        grailsHome()
+
         mavenCentral()
         mavenRepo "http://maven.springframework.org/milestone/"
 
@@ -35,8 +38,9 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-        // runtime 'mysql:mysql-connector-java:5.1.18'
-        runtime 'org.springframework.integration:spring-integration-amqp:2.1.1.RELEASE'
+        runtime 'mysql:mysql-connector-java:5.1.18'
+        runtime 'org.springframework.integration:spring-integration-amqp:2.1.3.RELEASE'
+        //runtime 'org.springframework.integration:spring-integration-jmx:2.1.1.RELEASE'
 
 
     }
@@ -54,8 +58,8 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:$grailsVersion"
         runtime ":rabbitmq:1.0.0.RC1"
 
-        runtime ":events-si:1.0.M2-SNAPSHOT"
-        runtime ":events-push:1.0.M1-SNAPSHOT"
+        runtime (":events-si:1.0.M2-SNAPSHOT")
+        runtime (":events-push:1.0.M2-SNAPSHOT")
 
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
