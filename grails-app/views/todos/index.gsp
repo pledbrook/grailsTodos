@@ -9,28 +9,33 @@
   </r:script>
   <r:script>
 $(function(){
-  if (!window.grailsEvents) window.grailsEvents = new grails.Events('${createLink(uri: '')}', null, {transport:'sse'});
+  if (!window.grailsEvents) {
+    window.grailsEvents = new grails.Events(
+        '${createLink(uri: '')}',
+        null,
+        {transport:'sse'});
+  }
 
-  grailsEvents.on("afterInsert", function(data){
-        var model = Todos.get(data.id);
-        if(!model){
-            Todos.add(new Todo(data));
-        }
+  grailsEvents.on("afterInsert", function(data) {
+    var model = Todos.get(data.id);
+    if(!model){
+      Todos.add(new Todo(data));
+    }
   });
 
-  grailsEvents.on("afterDelete", function(data){
-          var model = Todos.get(data.id);
-          if(model){
-              Todos.remove(model);
-          }
+  grailsEvents.on("afterDelete", function(data) {
+    var model = Todos.get(data.id);
+    if(model){
+      Todos.remove(model);
+    }
   });
 
-  grailsEvents.on("afterUpdate", function(data){
-            var model = Todos.get(data.id);
-            if(model){
-                model.set(data);
-            }
-    });
+  grailsEvents.on("afterUpdate", function(data) {
+    var model = Todos.get(data.id);
+    if(model){
+      model.set(data);
+    }
+  });
 });
   </r:script>
 </head>
